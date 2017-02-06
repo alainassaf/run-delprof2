@@ -4,7 +4,7 @@
 .DESCRIPTION
 	Runs delprof2.exe on servers in the selected Worker Group
 
-	It is recommended that this script be run as a Citrix admin. 
+	This script has a dependency on delprof2.exe written by Helge Klein. It can be downloaded from https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/. It is recommended that this script be run as a Citrix admin. 
 .PARAMETER
     XMLBrokers Optional parameter. Which Citrix XMLBroker(s) (farm) to query. Can be a list separated by commas.
 .PARAMETER
@@ -15,20 +15,28 @@
 	Will use all default values.
 .EXAMPLE
 	PS C:\PSScript > .\run-delprof2.ps1 -XMLBrokers "XMLBROKER"
+    
+    Will use "XMLBROKER" to query XenApp farm.
 .EXAMPLE
 	PS C:\PSScript > .\run-delprof2.ps1 -XMLBrokers "XMLBROKER" -Delproflocation "C:\delprof2.exe"
+    
+    Will use "XMLBROKER" to query XenApp farm and "c:\delprof2.exe" as location for delprof2.exe.
 .OUTPUTS
     None
 .NOTES
 	NAME: run-delprof2.ps1
-	VERSION: 1.00
+	VERSION: 1.03
     CHANGE LOG - Version - When - What - Who
-                 1.00 - 02/6/2017 - Inititail script - Alain Assaf/Philips
+                 1.00 - 02/6/2017 - Initial script - Alain Assaf
+                 1.01 - 02/6/2017 - Added additional help and pointed to delprof2 website - Alain Assaf
+                 1.02 - 02/6/2017 - Made default values of variables generic. Removed unused function - Alain Assaf
+                 1.03 - 02/6/2017 - Cleaned up unused variables and added additional comments. Changed write-vebose to write-warning for errors - Alain Assaf
 	AUTHOR: Alain Assaf
 	LASTEDIT: Feburary 6, 2017
 .LINK
     http://www.linkedin.com/in/alainassaf/
     http://wagthereal.com
+    https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/
     https://mcpmag.com/articles/2015/01/08/powershell-scripts-talk-back.aspx
     https://blogs.msdn.microsoft.com/powershell/2006/10/14/windows-powershell-exit-codes/
     https://blogs.msdn.microsoft.com/kebab/2013/06/09/an-introduction-to-error-handling-in-powershell/
@@ -41,20 +49,15 @@
 Param(
  [parameter(Position = 0, Mandatory=$False )]
  [ValidateNotNullOrEmpty()]
- $XMLBrokers="PXML07500v,PXML07501v,CXML07500v,CXML07501", # Change to hardcode a default value for your Delivery Controller
+ $XMLBrokers="CITRIXXMLBROKER", # Change to hardcode a default value for your XML Brokers
  
  [parameter(Position = 1, Mandatory=$False )]
  [ValidateNotNullOrEmpty()]
- $Delproflocation="\\homedirprod\PAL\Delprof2 1.6.0\delprof2.exe"
+ $Delproflocation="C:\Delprof2 1.6.0\delprof2.exe" # Change to hardcode a default location for delprof2.exe
  )
 
 #Constants
-$datetime = get-date -format "MM-dd-yyyy_HH-mm"
-$Domain=".ncsecu.local" # Change to match your companies Active Directory Domain
-$ScriptRunner = (gci env:username).value
-#$PSModules = ("")
 $PSSnapins = ("*citrix*")
-$compname = (gci env:COMPUTERNAME).value
 #$ErrorActionPreference= 'silentlycontinue'
 
 ### START FUNCTION: get-mymodule #####################################################
@@ -106,37 +109,33 @@ function Test-Port{
 }
 ### END FUNCTION: test-port ########################################################
 
-
-#Import Module(s) and Snapin(s)
-#foreach ($module in $PSModules.Split(",")) {
-# if (!(get-mymodule $module)) {
-# write-verbose "$module PowerShell Cmdlet not available."
-# write-verbose "Please run this script from a system with the $module PowerShell Cmdlets installed."
-# exit
-# }
-#}
+# Load PowerShell Snapins
 foreach ($snapin in $PSSnapins.Split(",")) {
- if (!(get-MySnapin $snapin)) {
- write-verbose "$snapin PowerShell Cmdlet not available."
- write-verbose "Please run this script from a system with the $snapin PowerShell Cmdlets installed."
- exit
+    if (!(get-MySnapin $snapin)) {
+        write-warning "$snapin PowerShell Cmdlet not available."
+        write-warning "Please run this script from a system with the $snapin PowerShell Cmdlets installed."
+        exit 1
  }
 } 
 
-#Find an XML Broker that is up
+# Find an XML Broker that is up
 $DC = $XMLBrokers.Split(",")
 foreach ($broker in $DC) {
     if ((Test-Port $broker) -and (Test-Port $broker -port 1494) -and (Test-Port $broker -port 2598))  {
         $XMLBroker = $broker
+    } else {
+        write-warning "$XMLBROKER is not valid. Exiting run-delprof2.ps1"
+        exit 1
     }
 }
 
-#confirm delprof2.exe exists 
+# Confirm delprof2.exe exists 
 if (!(test-path $Delproflocation)) {
     write-warning "$Delproflocation is not valid. Exiting run-delprof2.ps1"
     exit 1
 }
 
+# Get a list of Worker Groups
 $workergroups = Get-XAWorkerGroup -ComputerName $xmlbroker | select WorkerGroupname | sort -Property workergroupname
 
 # Create a list box of Workergroups for user to pick
@@ -188,7 +187,6 @@ $result = $wgObjForm.ShowDialog()
 if ($result -eq [System.Windows.Forms.DialogResult]::OK)
 {
     $workergroup = $objListBox.SelectedItem
-    #$x
 } else {
     exit 1
 }
@@ -196,7 +194,7 @@ if ($result -eq [System.Windows.Forms.DialogResult]::OK)
 # Get computers in workergroup
 $wgservers = (Get-XAWorkerGroupServer -ComputerName $XMLBroker -WorkerGroupName $workergroup)
 
-# Run DelProf against servers in workergroup
+# Run DelProf against each server in workergroup
 foreach ($server in $wgservers) {
     $sname = $server.servername.Tostring()
     $arg1 = '-c:' + $sname
