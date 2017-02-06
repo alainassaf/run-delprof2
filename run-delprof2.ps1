@@ -1,49 +1,44 @@
 ﻿<#
 .SYNOPSIS
-	Runs delprof2.exe on servers in the selected Worker Group
+Runs delprof2.exe on servers in the selected Worker Group
 .DESCRIPTION
-	Runs delprof2.exe on servers in the selected Worker Group
+Runs delprof2.exe on servers in the selected Worker Group
 
-	This script has a dependency on delprof2.exe written by Helge Klein. It can be downloaded from https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/. It is recommended that this script be run as a Citrix admin. 
-.PARAMETER
-    XMLBrokers Optional parameter. Which Citrix XMLBroker(s) (farm) to query. Can be a list separated by commas.
-.PARAMETER
-    Delproflocation Optional parameter. Location of Delprof2.exe.
+This script has a dependency on delprof2.exe written by Helge Klein. It can be downloaded from https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/. It is recommended that this script be run as a Citrix admin. 
+
+.PARAMETER XMLBrokers
+Optional parameter. Which Citrix XMLBroker(s) (farm) to query. Can be a list separated by commas.
+.PARAMETER Delproflocation
+Optional parameter. Location of Delprof2.exe.
 .EXAMPLE
-	PS C:\PSScript > .\run-delprof2.ps1
-	
-	Will use all default values.
+PS C:\PSScript > .\run-delprof2.ps1
+Will use all default values.
 .EXAMPLE
-	PS C:\PSScript > .\run-delprof2.ps1 -XMLBrokers "XMLBROKER"
-    
-    Will use "XMLBROKER" to query XenApp farm.
+PS C:\PSScript > .\run-delprof2.ps1 -XMLBrokers "XMLBROKER"
+Will use "XMLBROKER" to query XenApp farm.
 .EXAMPLE
-	PS C:\PSScript > .\run-delprof2.ps1 -XMLBrokers "XMLBROKER" -Delproflocation "C:\delprof2.exe"
-    
-    Will use "XMLBROKER" to query XenApp farm and "c:\delprof2.exe" as location for delprof2.exe.
-.OUTPUTS
-    None
+PS C:\> .\run-delprof2.ps1 -XMLBrokers "XMLBROKER" -Delproflocation "C:\delprof2.exe"
+Will use "XMLBROKER" to query XenApp farm and "c:\delprof2.exe" as location for delprof2.exe.
 .NOTES
-	NAME: run-delprof2.ps1
-	VERSION: 1.03
-    CHANGE LOG - Version - When - What - Who
-                 1.00 - 02/6/2017 - Initial script - Alain Assaf
-                 1.01 - 02/6/2017 - Added additional help and pointed to delprof2 website - Alain Assaf
-                 1.02 - 02/6/2017 - Made default values of variables generic. Removed unused function - Alain Assaf
-                 1.03 - 02/6/2017 - Cleaned up unused variables and added additional comments. Changed write-vebose to write-warning for errors - Alain Assaf
-	AUTHOR: Alain Assaf
-	LASTEDIT: Feburary 6, 2017
+NAME        :  run-delprof2
+VERSION     :  1.04
+LAST UPDATED:  2/6/2017
+AUTHOR      :  Alain Assaf
 .LINK
-    http://www.linkedin.com/in/alainassaf/
-    http://wagthereal.com
-    https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/
-    https://mcpmag.com/articles/2015/01/08/powershell-scripts-talk-back.aspx
-    https://blogs.msdn.microsoft.com/powershell/2006/10/14/windows-powershell-exit-codes/
-    https://blogs.msdn.microsoft.com/kebab/2013/06/09/an-introduction-to-error-handling-in-powershell/
-    https://technet.microsoft.com/en-us/library/ff730949.aspx
-    https://msdn.microsoft.com/en-us/powershell/scripting/getting-started/cookbooks/selecting-items-from-a-list-box
-    http://stackoverflow.com/questions/25187048/run-executable-from-powershell-script-with-parameters
-    http://windowssecrets.com/forums/showthread.php/156384-Powershell-Forms-Which-Button
+http://www.linkedin.com/in/alainassaf/
+http://wagthereal.com
+https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/
+https://mcpmag.com/articles/2015/01/08/powershell-scripts-talk-back.aspx
+https://blogs.msdn.microsoft.com/powershell/2006/10/14/windows-powershell-exit-codes/
+https://blogs.msdn.microsoft.com/kebab/2013/06/09/an-introduction-to-error-handling-in-powershell/
+https://technet.microsoft.com/en-us/library/ff730949.aspx
+https://msdn.microsoft.com/en-us/powershell/scripting/getting-started/cookbooks/selecting-items-from-a-list-box
+http://stackoverflow.com/questions/25187048/run-executable-from-powershell-script-with-parameters
+http://windowssecrets.com/forums/showthread.php/156384-Powershell-Forms-Which-Button
+.INPUTS
+None
+.OUTPUTS
+None
 #>
 
 Param(
