@@ -25,11 +25,12 @@
     None
 .NOTES
 	NAME: run-delprof2.ps1
-	VERSION: 1.02
+	VERSION: 1.03
     CHANGE LOG - Version - When - What - Who
                  1.00 - 02/6/2017 - Initial script - Alain Assaf
                  1.01 - 02/6/2017 - Added additional help and pointed to delprof2 website - Alain Assaf
                  1.02 - 02/6/2017 - Made default values of variables generic. Removed unused function - Alain Assaf
+                 1.03 - 02/6/2017 - Cleaned up unused variables and added additional comments. Changed write-vebose to write-warning for errors - Alain Assaf
 	AUTHOR: Alain Assaf
 	LASTEDIT: Feburary 6, 2017
 .LINK
@@ -56,12 +57,7 @@ Param(
  )
 
 #Constants
-$datetime = get-date -format "MM-dd-yyyy_HH-mm"
-$Domain=".ncsecu.local" # Change to match your companies Active Directory Domain
-$ScriptRunner = (gci env:username).value
-#$PSModules = ("")
 $PSSnapins = ("*citrix*")
-$compname = (gci env:COMPUTERNAME).value
 #$ErrorActionPreference= 'silentlycontinue'
 
 ### START FUNCTION: get-mymodule #####################################################
@@ -113,28 +109,33 @@ function Test-Port{
 }
 ### END FUNCTION: test-port ########################################################
 
+# Load PowerShell Snapins
 foreach ($snapin in $PSSnapins.Split(",")) {
- if (!(get-MySnapin $snapin)) {
- write-verbose "$snapin PowerShell Cmdlet not available."
- write-verbose "Please run this script from a system with the $snapin PowerShell Cmdlets installed."
- exit
+    if (!(get-MySnapin $snapin)) {
+        write-warning "$snapin PowerShell Cmdlet not available."
+        write-warning "Please run this script from a system with the $snapin PowerShell Cmdlets installed."
+        exit 1
  }
 } 
 
-#Find an XML Broker that is up
+# Find an XML Broker that is up
 $DC = $XMLBrokers.Split(",")
 foreach ($broker in $DC) {
     if ((Test-Port $broker) -and (Test-Port $broker -port 1494) -and (Test-Port $broker -port 2598))  {
         $XMLBroker = $broker
+    } else {
+        write-warning "$XMLBROKER is not valid. Exiting run-delprof2.ps1"
+        exit 1
     }
 }
 
-#confirm delprof2.exe exists 
+# Confirm delprof2.exe exists 
 if (!(test-path $Delproflocation)) {
     write-warning "$Delproflocation is not valid. Exiting run-delprof2.ps1"
     exit 1
 }
 
+# Get a list of Worker Groups
 $workergroups = Get-XAWorkerGroup -ComputerName $xmlbroker | select WorkerGroupname | sort -Property workergroupname
 
 # Create a list box of Workergroups for user to pick
@@ -186,7 +187,6 @@ $result = $wgObjForm.ShowDialog()
 if ($result -eq [System.Windows.Forms.DialogResult]::OK)
 {
     $workergroup = $objListBox.SelectedItem
-    #$x
 } else {
     exit 1
 }
@@ -194,7 +194,7 @@ if ($result -eq [System.Windows.Forms.DialogResult]::OK)
 # Get computers in workergroup
 $wgservers = (Get-XAWorkerGroupServer -ComputerName $XMLBroker -WorkerGroupName $workergroup)
 
-# Run DelProf against servers in workergroup
+# Run DelProf against each server in workergroup
 foreach ($server in $wgservers) {
     $sname = $server.servername.Tostring()
     $arg1 = '-c:' + $sname
