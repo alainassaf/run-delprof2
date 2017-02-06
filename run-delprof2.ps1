@@ -25,10 +25,11 @@
     None
 .NOTES
 	NAME: run-delprof2.ps1
-	VERSION: 1.01
+	VERSION: 1.02
     CHANGE LOG - Version - When - What - Who
                  1.00 - 02/6/2017 - Initial script - Alain Assaf
                  1.01 - 02/6/2017 - Added additional help and pointed to delprof2 website - Alain Assaf
+                 1.02 - 02/6/2017 - Made default values of variables generic. Removed unused function - Alain Assaf
 	AUTHOR: Alain Assaf
 	LASTEDIT: Feburary 6, 2017
 .LINK
