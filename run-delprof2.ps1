@@ -47,11 +47,11 @@
 Param(
  [parameter(Position = 0, Mandatory=$False )]
  [ValidateNotNullOrEmpty()]
- $XMLBrokers="PXML07500v,PXML07501v,CXML07500v,CXML07501", # Change to hardcode a default value for your Delivery Controller
+ $XMLBrokers="CITRIXXMLBROKER", # Change to hardcode a default value for your XML Brokers
  
  [parameter(Position = 1, Mandatory=$False )]
  [ValidateNotNullOrEmpty()]
- $Delproflocation="\\homedirprod\PAL\Delprof2 1.6.0\delprof2.exe"
+ $Delproflocation="C:\Delprof2 1.6.0\delprof2.exe" # Change to hardcode a default location for delprof2.exe
  )
 
 #Constants
@@ -112,15 +112,6 @@ function Test-Port{
 }
 ### END FUNCTION: test-port ########################################################
 
-
-#Import Module(s) and Snapin(s)
-#foreach ($module in $PSModules.Split(",")) {
-# if (!(get-mymodule $module)) {
-# write-verbose "$module PowerShell Cmdlet not available."
-# write-verbose "Please run this script from a system with the $module PowerShell Cmdlets installed."
-# exit
-# }
-#}
 foreach ($snapin in $PSSnapins.Split(",")) {
  if (!(get-MySnapin $snapin)) {
  write-verbose "$snapin PowerShell Cmdlet not available."
