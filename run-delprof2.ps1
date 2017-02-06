@@ -4,7 +4,7 @@
 .DESCRIPTION
 	Runs delprof2.exe on servers in the selected Worker Group
 
-	It is recommended that this script be run as a Citrix admin. 
+	This script has a dependency on delprof2.exe written by Helge Klein. It can be downloaded from https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/. It is recommended that this script be run as a Citrix admin. 
 .PARAMETER
     XMLBrokers Optional parameter. Which Citrix XMLBroker(s) (farm) to query. Can be a list separated by commas.
 .PARAMETER
@@ -15,20 +15,26 @@
 	Will use all default values.
 .EXAMPLE
 	PS C:\PSScript > .\run-delprof2.ps1 -XMLBrokers "XMLBROKER"
+    
+    Will use "XMLBROKER" to query XenApp farm.
 .EXAMPLE
 	PS C:\PSScript > .\run-delprof2.ps1 -XMLBrokers "XMLBROKER" -Delproflocation "C:\delprof2.exe"
+    
+    Will use "XMLBROKER" to query XenApp farm and "c:\delprof2.exe" as location for delprof2.exe.
 .OUTPUTS
     None
 .NOTES
 	NAME: run-delprof2.ps1
-	VERSION: 1.00
+	VERSION: 1.01
     CHANGE LOG - Version - When - What - Who
-                 1.00 - 02/6/2017 - Inititail script - Alain Assaf/Philips
+                 1.00 - 02/6/2017 - Initial script - Alain Assaf
+                 1.01 - 02/6/2017 - Added additional help and pointed to delprof2 website - Alain Assaf
 	AUTHOR: Alain Assaf
 	LASTEDIT: Feburary 6, 2017
 .LINK
     http://www.linkedin.com/in/alainassaf/
     http://wagthereal.com
+    https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/
     https://mcpmag.com/articles/2015/01/08/powershell-scripts-talk-back.aspx
     https://blogs.msdn.microsoft.com/powershell/2006/10/14/windows-powershell-exit-codes/
     https://blogs.msdn.microsoft.com/kebab/2013/06/09/an-introduction-to-error-handling-in-powershell/
