@@ -12,7 +12,7 @@ I'd like to highlight the posts that helped me write this scrip below.
 * http://windowssecrets.com/forums/showthread.php/156384-Powershell-Forms-Which-Button
 
 # Legal and Licensing
-PowerShell is licensed under the [MIT license][].
+The run-delprof2.ps1 script is licensed under the [MIT license][].
 
 [MIT license]: LICENSE
 
