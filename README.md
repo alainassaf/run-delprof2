@@ -11,5 +11,16 @@ I'd like to highlight the posts that helped me write this scrip below.
 * http://stackoverflow.com/questions/25187048/run-executable-from-powershell-script-with-parameters
 * http://windowssecrets.com/forums/showthread.php/156384-Powershell-Forms-Which-Button
 
+# Legal and Licensing
+This script is licensed under the [MIT license][].
+
+[MIT license]: LICENSE.txt
+
+# What to connect?
+* LinkedIn https://www.linkedin.com/in/alainassaf
+* Twitter http://twitter.com/alainassaf
+* Wag the Real - my blog https://wagthereal.com
+* Edgesightunderthehood - my other blog https://edgesightunderthehood.com
+
 # Help
 I welcome any feedback, ideas or contributors.
