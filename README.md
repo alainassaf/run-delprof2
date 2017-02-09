@@ -1,6 +1,7 @@
 # run-delprof2
 Runs delprof2.exe on servers in the selected Worker Group
-# Contributions to this script
+
+#Contributions to this script
 I'd like to highlight the posts that helped me write this scrip below.
 * https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/
 * https://mcpmag.com/articles/2015/01/08/powershell-scripts-talk-back.aspx
@@ -25,10 +26,8 @@ SYNTAX
     
 DESCRIPTION
     Runs delprof2.exe on servers in the selected Worker Group
-    
     This script has a dependency on delprof2.exe written by Helge Klein. It can be downloaded from https://helgeklein.com/free-tools/delprof2-user-profile-deletion-tool/. It is recommended that this script be run as a Citrix admin.
     
-
 PARAMETERS
     -XMLBrokers <Object>
         Optional parameter. Which Citrix XMLBroker(s) (farm) to query. Can be a list separated by commas.
@@ -56,18 +55,11 @@ PARAMETERS
     
 INPUTS
     None
-        
-    
-    
     
 OUTPUTS
     None
-        
-    
-    
     
 NOTES
-    
     
         NAME        :  run-delprof2
         VERSION     :  1.04
@@ -77,36 +69,20 @@ NOTES
     -------------------------- EXAMPLE 1 --------------------------
     
     PS C:\PSScript >.\run-delprof2.ps1
-    
-    
+   
     Will use all default values.
-    
-    
-    
-    
     
     -------------------------- EXAMPLE 2 --------------------------
     
     PS C:\PSScript >.\run-delprof2.ps1 -XMLBrokers "XMLBROKER"
     
-    
     Will use "XMLBROKER" to query XenApp farm.
-    
-    
-    
-    
     
     -------------------------- EXAMPLE 3 --------------------------
     
     PS C:\>.\run-delprof2.ps1 -XMLBrokers "XMLBROKER" -Delproflocation "C:\delprof2.exe"
     
-    
     Will use "XMLBROKER" to query XenApp farm and "c:\delprof2.exe" as location for delprof2.exe.
-    
-    
-    
-    
-    
     
 RELATED LINKS
     http://www.linkedin.com/in/alainassaf/
@@ -125,11 +101,11 @@ The run-delprof2.ps1 script is licensed under the [MIT license][].
 
 [MIT license]: LICENSE
 
-# What to connect?
-* LinkedIn https://www.linkedin.com/in/alainassaf
-* Twitter http://twitter.com/alainassaf
-* Wag the Real - my blog https://wagthereal.com
-* Edgesightunderthehood - my other blog https://edgesightunderthehood.com
+# Want to connect?
+* LinkedIn - https://www.linkedin.com/in/alainassaf
+* Twitter - http://twitter.com/alainassaf
+* Wag the Real - my blog - https://wagthereal.com
+* Edgesightunderthehood - my other - blog https://edgesightunderthehood.com
 
 # Help
 I welcome any feedback, ideas or contributors.
