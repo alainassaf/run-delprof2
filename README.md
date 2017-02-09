@@ -14,8 +14,6 @@ I'd like to highlight the posts that helped me write this scrip below.
 # Legal and Licensing
 This script is licensed under the [MIT license][].
 
-[MIT license]: LICENSE.txt
-
 # What to connect?
 * LinkedIn https://www.linkedin.com/in/alainassaf
 * Twitter http://twitter.com/alainassaf
