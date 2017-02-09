@@ -12,7 +12,9 @@ I'd like to highlight the posts that helped me write this scrip below.
 * http://windowssecrets.com/forums/showthread.php/156384-Powershell-Forms-Which-Button
 
 # Legal and Licensing
-This script is licensed under the [MIT license][].
+PowerShell is licensed under the [MIT license][].
+
+[MIT license]: LICENSE
 
 # What to connect?
 * LinkedIn https://www.linkedin.com/in/alainassaf
